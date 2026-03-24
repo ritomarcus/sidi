@@ -72,14 +72,16 @@ public class Servidor {
 		return "ok";
 	}
 
-	// Processa a entrada separando
+	// Processa a entrada removendo todos os espaços vazios e separando os
+	// identificadores de serviços 1 ou 2
 	static String[] processarEntrada(String entrada) {
 		String semEspaco = entrada.replace(" ", "");
 		return semEspaco.split(";");
 	}
 
+	// Faz as operações solicitadas pelo cliente
 	static double calculadora(String entrada) {
-		String expressao[] = entrada.split("[+\\-*/]");
+		String expressao[] = entrada.split("[+\\-*/%]");
 
 		int indice = -1;
 
@@ -91,6 +93,8 @@ public class Servidor {
 			indice = entrada.indexOf('*');
 		} else if (entrada.indexOf('/') != -1) {
 			indice = entrada.indexOf('/');
+		} else if (entrada.indexOf('%') != -1) {
+			indice = entrada.indexOf('%');
 		}
 
 		char operador = entrada.charAt(indice);
@@ -107,6 +111,8 @@ public class Servidor {
 				return n1 * n2;
 			case '/':
 				return n1 / n2;
+			case '%':
+				return n1 % n2;
 			default:
 				return 0;
 		}
